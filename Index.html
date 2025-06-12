@@ -3,6 +3,51 @@
 <title>Página principal</title>
 <!--Conexión a css-->
 <link rel="stylesheet" href="Stylefront.css">
+<script>
+    function contarDivs() {
+      // Selecciona todos los elementos <div>
+      const divs = document.querySelectorAll(".border-h3");
+      // Muestra el resultado en el párrafo con id="resultado"
+      document.getElementById("resultado").textContent = `Hay ${divs.length} hobbies en la página.`;
+    }
+</script>
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .producto { margin-bottom: 10px; }
+    button { margin-left: 10px; }
+    #carrito { margin-top: 20px; }
+  </style>
+<script>
+    const carrito = [];
+
+    function agregarAlCarrito(nombre, precio) {
+      // Buscar si ya está el producto para aumentar cantidad
+      const productoExistente = carrito.find(item => item.nombre === nombre);
+
+      if (productoExistente) {
+        productoExistente.cantidad += 1;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      const lista = document.getElementById('carrito');
+      lista.innerHTML = '';
+
+      let total = 0;
+      carrito.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.nombre} - $${item.precio} x ${item.cantidad}`;
+        lista.appendChild(li);
+        total += item.precio * item.cantidad;
+      });
+
+      document.getElementById('total').textContent = `Total: $${total}`;
+    }
+  </script>
 </head>
 <body>
 <h1>
@@ -95,6 +140,38 @@ Portafolios
         </div>
     </div>
 </h3>
+<div class="calculos">
+    <p class="p-Cheading">
+        Formulario
+    </p>
+    <div class="contenedor">
+        <div class="seccion-izquierda">
+            <p class="p-h2">
+                <button onclick="contarDivs()">Contar DIVs</button>
+            </p>
+        </div>
+        <div class="seccion-derecha">
+            <p class="p-h2" id="resultado"></p>
+        </div>
+    </div>
+</div>
+<h5>Productos</h5>
+<div class="producto">
+  <span>Camisa - $20</span>
+  <button onclick="agregarAlCarrito('Camisa', 20)">Agregar al carrito</button>
+</div>
+<div class="producto">
+  <span>Pantalón - $35</span>
+  <button onclick="agregarAlCarrito('Pantalón', 35)">Agregar al carrito</button>
+</div>
+<div class="producto">
+  <span>Zapatos - $50</span>
+  <button onclick="agregarAlCarrito('Zapatos', 50)">Agregar al carrito</button>
+</div>
+
+<h5>Carrito</h5>
+<ul id="carrito"></ul>
+<p id="total">Total: $0</p>
 </body>
 <foot>
     <p class="foottext">
